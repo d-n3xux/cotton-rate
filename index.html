@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Live Cotton Tracker & Taluka News</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="main-container">
+        
+        <!-- SECTION 1: Local News Board Component -->
+        <div class="news-card">
+            <div class="news-header-row">
+                <div class="badge-news" id="lang-news-badge">KORPANA NEWS FEED</div>
+                <!-- Language Converter Option Toggle Grid -->
+                <div class="lang-converter">
+                    <button onclick="toggleLanguage('en')" id="btn-lang-en" class="lang-btn active">EN</button>
+                    <button onclick="toggleLanguage('mr')" id="btn-lang-mr" class="lang-btn">मराठी</button>
+                </div>
+            </div>
+            
+            <h2 id="lang-news-title">Surrounding Taluka Updates</h2>
+            <p class="news-hint" id="lang-news-hint">Recent village reports from the last 3 days</p>
+            
+            <div class="news-display-row">
+                <!-- Skipped / Previous News Control -->
+                <button class="nav-btn" onclick="navigateNews(-1)" title="View Skipped News">
+                    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+
+                <!-- Summary Paragraph Display Box -->
+                <div class="news-box">
+                    <div class="news-body">
+                        <h4 id="news-headline">Loading local headlines...</h4>
+                        <p id="news-summary">Fetching and parsing summaries from surrounding regional channels...</p>
+                    </div>
+                    <div class="news-footer-meta">
+                        <span id="news-date" class="news-timestamp">Checking feed timeline...</span>
+                        <!-- Read Detailed News Button Trigger -->
+                        <button class="detail-trigger-btn" onclick="openDetailedNewsModal()" id="lang-read-more">Read Detailed Version</button>
+                    </div>
+                </div>
+                
+                <!-- Next News Control -->
+                <button class="nav-btn" onclick="navigateNews(1)" title="Next News Story">
+                    <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- SECTION 2: Core APMC Cotton Pricing Indicator Component -->
+        <div class="card">
+            <div class="badge-live" id="lang-mandi-badge">LIVE APMC DATA</div>
+            <h1 id="lang-mandi-title">Cotton Market Rate</h1>
+            <div class="sub-header" id="lang-mandi-sub">Korpana APMC (Chandrapur)</div>
+
+            <div class="flex-row">
+                <div class="indicator">
+                    <div id="cotton-price" class="rate">₹--</div>
+                    <span class="unit" id="lang-mandi-unit">per Quintal (Kapas)</span>
+                </div>
+
+                <button id="refresh-button" class="refresh-btn" onclick="fetchLiveRates()" title="Refresh Market Price">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="status-container">
+                <span id="timestamp">Connecting to live feed...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 3: Deep Detailed Version Modal Overlay Pop-Up -->
+    <div id="detailed-modal" class="modal-overlay">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 id="modal-title">Detailed News Report</h3>
+                <button class="close-modal-btn" onclick="closeDetailedNewsModal()">×</button>
+            </div>
+            <div class="modal-body-content">
+                <p id="modal-full-text">Detailed transcripts are loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
