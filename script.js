@@ -1,5 +1,6 @@
 const COTTON_API = 'https://allorigins.win' + encodeURIComponent('https://agriplus.in');
 
+// Global Translation Memory Dictionary (English & Marathi)
 const uiDictionary = {
     en: {
         newsBadge: "KORPANA NEWS FEED",
@@ -10,7 +11,6 @@ const uiDictionary = {
         mandiTitle: "Cotton Market Rate",
         mandiSub: "Korpana APMC (Chandrapur)",
         mandiUnit: "per Quintal (Kapas)",
-        yesterdayLabel: "Yesterday's Close:",
         connecting: "Connecting to live servers...",
         updated: "Updated: Today at "
     },
@@ -23,7 +23,6 @@ const uiDictionary = {
         mandiTitle: "कापूस बाजार भाव",
         mandiSub: "कोरपना बाजार समिती (चंद्रपूर)",
         mandiUnit: "प्रति क्विंटल (कापूस)",
-        yesterdayLabel: "कालचा बंद भाव:",
         connecting: "थेट सर्व्हरशी जोडत आहे...",
         updated: "अपडेट झाले: आज "
     }
@@ -33,6 +32,7 @@ let currentLanguage = 'en';
 let newsArticles = [];
 let currentNewsIndex = 0;
 
+// Hardcoded comprehensive, rich daily village news dataset matching strict 3-day boundaries
 const localNewsDatabase = {
     en: [
         {
@@ -59,7 +59,7 @@ const localNewsDatabase = {
         },
         {
             headline: "गडचांदूर बाह्यवळण रस्त्याच्या कामाला मंजुरी; कापूस वाहतूक होणार सुलभ",
-            summary: "मुख्य शेती क्षेत्राला जिनिंग मिलशी जोडणार्‍या ग्रामीण बाह्यवळण रस्त्याच्या तातडीच्या दुरुस्तीला सार्वजनिक बांधकाम विभागाने मंजुरी दिली आहे. यामुळे खड्डे बुजवून जड कापूस वाहतूक करणार्‍या वाहतुकीचा वेळ वाचणार आहे.",
+            summary: "मुख्य शेती क्षेत्राला जिनिंग मिलशी जोडणार्‍या ग्रामीण बाह्यवळण रस्त्याच्या तातडीच्या दुरुस्तीला सार्वजनिक बांधकाम विभागाने मंजुरी दिली आहे. यामुळे खड्डे बुजवून जड कापूस वाहतूक करणार्‍या वाहनांचा वेळ वाचणार आहे.",
             detailed: "गडचांदूर: शेतकर्‍यांच्या ट्रॅक्टर आणि जड वाहनांची वाहतूक कोंडी टाळण्यासाठी सार्वजनिक बांधकाम विभागाने (PWD) गडचांदूर बाह्यवळण रस्त्याच्या नूतनीकरणासाठी ₹४.५ कोटींचा निधी मंजूर केला आहे. खराब रस्त्यांमुळे कापूस वाहतूक करणारी वाहने तासनतास अडकून पडत होती, ज्यामुळे अपघाताचा धोका वाढला होता. पुढील महिन्यात येणार्‍या कापसाच्या हंगामापूर्वी हे काम युद्धपातळीवर पूर्ण करण्याचे आदेश देण्यात आले आहेत."
         },
         {
@@ -96,7 +96,7 @@ async function fetchLiveRates() {
                 return;
             }
         }
-        throw new Error("Mandi parsing error.");
+        throw new Error("Mandi grid parsing error.");
     } catch (error) {
         const currentDistrictBase = 8760; 
         const marketFlock = Math.floor(Math.random() * 120) - 60; 
@@ -110,20 +110,6 @@ async function fetchLiveRates() {
             btnEl.classList.remove('spinning');
             priceEl.style.opacity = '1';
         }, 500);
-    }
-}
-
-// Dark Mode Toggle Logic
-function toggleDarkMode() {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const themeBtn = document.getElementById('theme-btn');
-    
-    if (currentTheme === 'dark') {
-        document.documentElement.removeAttribute('data-theme');
-        themeBtn.innerText = '🌙';
-    } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        themeBtn.innerText = '☀️';
     }
 }
 
@@ -144,6 +130,7 @@ function displayActiveNewsItem() {
     }
 }
 
+// Symmetrical Navigation Loop Handler (Accepts positive and negative integers)
 function navigateNews(step) {
     if (newsArticles.length > 0) {
         currentNewsIndex = (currentNewsIndex + step + newsArticles.length) % newsArticles.length;
@@ -151,10 +138,16 @@ function navigateNews(step) {
     }
 }
 
+// Bidirectional Language Toggle Engine
 function toggleLanguage(lang) {
     if (lang === currentLanguage) return;
     currentLanguage = lang;
 
+    // Reset indicator selection states
+    document.getElementById('btn-lang-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-lang-mr').classList.toggle('active', lang === 'mr');
+
+    // Dynamically adjust static labels using core dictionary
 document.getElementById('lang-news-badge').innerText = uiDictionary[lang].newsBadge;
 document.getElementById('lang-news-title').innerText = uiDictionary[lang].newsTitle;
 document.getElementById('lang-news-hint').innerText = uiDictionary[lang].newsHint;

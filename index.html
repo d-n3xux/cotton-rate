@@ -14,16 +14,10 @@
         <div class="news-card">
             <div class="news-header-row">
                 <div class="badge-news" id="lang-news-badge">KORPANA NEWS FEED</div>
-                
-                <div class="header-controls">
-                    <!-- Dark Mode Toggle Switch Button -->
-                    <button onclick="toggleDarkMode()" class="theme-toggle-btn" id="theme-btn" title="Toggle Dark/Light Mode">🌙</button>
-                    
-                    <!-- Language Converter Option Toggle Grid -->
-                    <div class="lang-converter">
-                        <button onclick="toggleLanguage('en')" id="btn-lang-en" class="lang-btn active">EN</button>
-                        <button onclick="toggleLanguage('mr')" id="btn-lang-mr" class="lang-btn">मराठी</button>
-                    </div>
+                <!-- Language Converter Option Toggle Grid -->
+                <div class="lang-converter">
+                    <button onclick="toggleLanguage('en')" id="btn-lang-en" class="lang-btn active">EN</button>
+                    <button onclick="toggleLanguage('mr')" id="btn-lang-mr" class="lang-btn">मराठी</button>
                 </div>
             </div>
             
@@ -44,6 +38,7 @@
                     </div>
                     <div class="news-footer-meta">
                         <span id="news-date" class="news-timestamp">Checking feed timeline...</span>
+                        <!-- Read Detailed News Button Trigger -->
                         <button class="detail-trigger-btn" onclick="openDetailedNewsModal()" id="lang-read-more">Read Detailed Version</button>
                     </div>
                 </div>
@@ -65,12 +60,6 @@
                 <div class="indicator">
                     <div id="cotton-price" class="rate">₹--</div>
                     <span class="unit" id="lang-mandi-unit">per Quintal (Kapas)</span>
-                    
-                    <!-- Yesterday's Closing Rate Trend Box -->
-                    <div class="trend-box">
-                        <span id="lang-yesterday-label">Yesterday's Close:</span> 
-                        <span id="yesterday-price" class="trend-value">₹8,710</span>
-                    </div>
                 </div>
 
                 <button id="refresh-button" class="refresh-btn" onclick="fetchLiveRates()" title="Refresh Market Price">
